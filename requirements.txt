@@ -1,0 +1,6 @@
+fastapi[standard]
+sqlalchemy>=2.0.0
+psycopg[binary]
+gmqtt
+pydantic
+jinja2

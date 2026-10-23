@@ -1,0 +1,19 @@
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Кэш Python и IDE
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.idea/
+.vscode/
+
+# Конфигурации и секреты
+.env
+
+# Системные файлы
+.DS_Store
+Thumbs.db

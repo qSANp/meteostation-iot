@@ -1,0 +1,42 @@
+services:
+  # 1. База данных PostgreSQL
+  postgres_db:
+    image: postgres:15
+    container_name: postgres_weather_meteostation
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_NAME:-weather_db}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # 2. MQTT Брокер (Mosquitto)
+  mqtt_broker:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto_broker_meteostation
+    ports:
+      - "1884:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: unless-stopped
+
+  # 3. FastAPI приложение
+  web_api:
+    build: .
+    container_name: meteostation_iot
+    ports:
+      - "8085:8000"
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-password}@postgres_db:5432/${DB_NAME:-weather_db}
+      - MQTT_BROKER_HOST=mqtt_broker
+      - MQTT_BROKER_PORT=1883
+    depends_on:
+      - postgres_db
+      - mqtt_broker
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
