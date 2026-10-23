@@ -1,1 +1,1 @@
-End-to-end IoT monitoring system with an asynchronous Python backend (FastAPI), MQTT broker, PostgreSQL database, and Grafana dashboard, fully containerized via Docker.
+Full-stack IoT environment monitoring system featuring an asynchronous FastAPI backend, Jinja2 server-side rendering (SSR), MQTT data pipeline, and PostgreSQL database, containerized via Docker.
